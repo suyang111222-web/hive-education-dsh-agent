@@ -1,0 +1,44 @@
+- insert:
+    - id: mcp-hive-student
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: hive-student
+        transport: stdio
+        command: node
+        args: ['dist/plugins/student-companion/src/server.js']
+        cwd: !!js process.env.HIVE_AGENT_ROOT
+        failOnStartupError: true
+        reconnect:
+          enabled: true
+          initialDelayMs: 500
+          maxDelayMs: 5000
+          maxAttempts: 3
+    - id: mcp-hive-teacher
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: hive-teacher
+        transport: stdio
+        command: node
+        args: ['dist/plugins/teacher-studio/src/server.js']
+        cwd: !!js process.env.HIVE_AGENT_ROOT
+        failOnStartupError: true
+        reconnect:
+          enabled: true
+          initialDelayMs: 500
+          maxDelayMs: 5000
+          maxAttempts: 3
+    - id: skill-hive-student
+      name: '@deepseek-ai/dsh-skill-filesystem'
+      config:
+        providerName: hive-student
+        includeDefaultRoots: false
+        customSkillDirs:
+          - !!js "process.getBuiltinModule('node:path').join(process.env.HIVE_AGENT_ROOT, 'dsh', 'skills', 'student')"
+    - id: skill-hive-teacher
+      name: '@deepseek-ai/dsh-skill-filesystem'
+      config:
+        providerName: hive-teacher
+        includeDefaultRoots: false
+        customSkillDirs:
+          - !!js "process.getBuiltinModule('node:path').join(process.env.HIVE_AGENT_ROOT, 'dsh', 'skills', 'teacher')"
+

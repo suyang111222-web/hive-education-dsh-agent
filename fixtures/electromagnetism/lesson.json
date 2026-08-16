@@ -1,0 +1,21 @@
+{
+  "id": "lesson-em-01",
+  "grade": "高中",
+  "subject": "高中物理",
+  "topic": "电磁感应与楞次定律",
+  "keyConcepts": ["磁通量变化", "楞次定律", "右手螺旋定则"],
+  "teacherApproved": true,
+  "source": {
+    "title": "教师确认的电磁感应演示卡",
+    "sourceType": "fixture",
+    "locator": "fixtures/electromagnetism/lesson.json"
+  },
+  "fixtureReplay": true,
+  "demoMisconception": "把阻碍磁通量变化误解成阻碍机械运动",
+  "guidanceSequence": [
+    "判断原磁通量如何变化",
+    "确定感应磁场应阻碍哪一种变化",
+    "再用右手螺旋定则判断电流方向"
+  ]
+}
+

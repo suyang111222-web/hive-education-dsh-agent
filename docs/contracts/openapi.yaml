@@ -1,0 +1,83 @@
+openapi: 3.1.0
+info:
+  title: Hive Education Reserved API
+  version: 0.1.0
+  description: >-
+    未来前后端接入契约；当前仓库未实现这些 HTTP 路由。所有示例均为匿名 fixture。
+servers:
+  - url: http://127.0.0.1:3000
+paths:
+  /v1/lessons/{lessonId}:
+    get:
+      operationId: getLesson
+      parameters:
+        - in: path
+          name: lessonId
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Teacher-approved lesson context
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Lesson' }
+  /v1/learning/doubts:
+    post:
+      operationId: createLearningDoubt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DoubtCommand' }
+      responses:
+        '202': { description: Accepted }
+  /v1/learning/handoffs:
+    post:
+      operationId: createLearningHandoff
+      responses:
+        '202': { description: Accepted }
+  /v1/teaching/plans:
+    post:
+      operationId: createTeachingPlanDraft
+      responses:
+        '202': { description: Draft accepted }
+  /v1/teaching/asset-jobs:
+    post:
+      operationId: createTeachingAssetJob
+      responses:
+        '202': { description: Stub or real adapter job accepted }
+  /v1/teaching/publication-reviews:
+    post:
+      operationId: requestPublicationReview
+      responses:
+        '202': { description: Pending teacher review; never automatic publication }
+  /v1/events:
+    get:
+      operationId: subscribeEvents
+      responses:
+        '200':
+          description: Versioned SSE event stream
+          content:
+            text/event-stream:
+              schema: { type: string }
+components:
+  schemas:
+    Lesson:
+      type: object
+      required: [id, grade, subject, topic, teacherApproved, source]
+      properties:
+        id: { type: string }
+        grade: { type: string }
+        subject: { type: string }
+        topic: { type: string }
+        teacherApproved: { type: boolean }
+        source: { type: string }
+    DoubtCommand:
+      type: object
+      required: [actorId, lessonId, concept, note]
+      properties:
+        actorId: { type: string, description: Pseudonymous service identifier }
+        lessonId: { type: string }
+        concept: { type: string }
+        note: { type: string, maxLength: 500 }
+
